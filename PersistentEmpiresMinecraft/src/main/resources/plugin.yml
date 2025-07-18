@@ -3,7 +3,7 @@ version: '${project.version}'
 description: Minecraft adaptation of Persistent Empires mod with factions, flag capturing, and RPG elements
 author: PersistentEmpires Team
 main: com.persistentempires.minecraft.PersistentEmpiresPlugin
-api-version: '1.21'
+api-version: '1.20'
 depend: []
 softdepend: []
 loadbefore: []
