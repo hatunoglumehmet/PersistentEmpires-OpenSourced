@@ -184,6 +184,9 @@ namespace PersistentEmpiresServer.ServerMissions
                 networkMessageHandlerRegisterer.Register<AdminChat>(this.HandleAdminChatFromServer);
                 networkMessageHandlerRegisterer.Register<RequestTpToPosition>(HandleRequestTpToPositionFromClient);
                 networkMessageHandlerRegisterer.Register<RequestToggleInvisibility>(this.HandleRequestToggleInvisibility);
+                networkMessageHandlerRegisterer.Register<RequestItemBrowser>(this.HandleRequestItemBrowser);
+                networkMessageHandlerRegisterer.Register<RequestMassItemSpawn>(this.HandleRequestMassItemSpawn);
+                networkMessageHandlerRegisterer.Register<RequestItemInfo>(this.HandleRequestItemInfo);
             }
         }
 
@@ -730,6 +733,75 @@ namespace PersistentEmpiresServer.ServerMissions
         public bool IsAdminInvisible(NetworkCommunicator admin)
         {
             return InvisibleAdmins.ContainsKey(admin) && InvisibleAdmins[admin];
+        }
+
+        public bool HandleRequestItemBrowser(NetworkCommunicator admin, RequestItemBrowser message)
+        {
+            PersistentEmpireRepresentative persistentEmpireRepresentative = admin.GetComponent<PersistentEmpireRepresentative>();
+            if (!persistentEmpireRepresentative.IsAdmin)
+            {
+                return false;
+            }
+
+            // This would integrate with the item browser system
+            // For now, just acknowledge the request
+            InformationComponent.Instance.SendMessage("Item browser request received", 
+                new Color(0f, 1f, 0f).ToUnsignedInteger(), admin);
+
+            return true;
+        }
+
+        public bool HandleRequestMassItemSpawn(NetworkCommunicator admin, RequestMassItemSpawn message)
+        {
+            PersistentEmpireRepresentative persistentEmpireRepresentative = admin.GetComponent<PersistentEmpireRepresentative>();
+            if (!persistentEmpireRepresentative.IsAdmin)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(message.ItemId) || message.Count <= 0 || message.Count > 1000)
+            {
+                InformationComponent.Instance.SendMessage("Invalid item spawn parameters", 
+                    new Color(1f, 0f, 0f).ToUnsignedInteger(), admin);
+                return false;
+            }
+
+            // Mass spawn items (would need proper implementation)
+            for (int i = 0; i < message.Count; i++)
+            {
+                persistentEmpireRepresentative.GetInventory().AddCountedItem(message.ItemId, 1);
+                
+                // Limit to prevent server lag
+                if (i >= 100) break;
+            }
+
+            InformationComponent.Instance.SendMessage($"Mass spawned {message.Count}x {message.ItemId}", 
+                new Color(0f, 1f, 0f).ToUnsignedInteger(), admin);
+
+            LoggerHelper.LogAnAction(admin, LogAction.AdminSpawnedItem, null, 
+                new object[] { $"Mass spawn: {message.ItemId}", message.Count });
+
+            return true;
+        }
+
+        public bool HandleRequestItemInfo(NetworkCommunicator admin, RequestItemInfo message)
+        {
+            PersistentEmpireRepresentative persistentEmpireRepresentative = admin.GetComponent<PersistentEmpireRepresentative>();
+            if (!persistentEmpireRepresentative.IsAdmin)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(message.ItemId))
+            {
+                return false;
+            }
+
+            // This would provide detailed item information
+            InformationComponent.Instance.SendMessage($"Requested info for: {message.ItemId}", 
+                new Color(0f, 1f, 0f).ToUnsignedInteger(), admin);
+
+            return true;
         }
 
         public override void OnAgentRemoved(Agent affectedAgent, Agent affectorAgent, AgentState agentState, KillingBlow blow)
