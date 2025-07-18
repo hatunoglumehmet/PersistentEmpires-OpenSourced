@@ -1,0 +1,158 @@
+# Persistent Empires Minecraft Configuration
+# This file contains all configuration options for the plugin
+
+# Database Configuration
+database:
+  # Database type: sqlite, mysql
+  type: sqlite
+  # For SQLite (default): relative path to plugin folder
+  sqlite_path: "data/persistent_empires.db"
+  # For MySQL: connection details
+  mysql:
+    host: localhost
+    port: 3306
+    database: persistent_empires
+    username: root
+    password: password
+
+# General Plugin Settings
+general:
+  # Starting gold for new players
+  starting_gold: 1000
+  # Enable voice chat integration (requires compatible voice chat plugin)
+  voice_chat_enabled: false
+  # Enable automatic server restart
+  auto_restart_enabled: true
+  # Auto restart interval in hours
+  auto_restart_interval: 24
+
+# Economy Settings
+economy:
+  # Maximum amount that can be stored in bank
+  bank_limit: 1000000
+  # Starting hunger value (0-100)
+  starting_hunger: 100
+  # Starting health value (1-20)
+  starting_health: 20
+
+# Combat Settings
+combat:
+  # Combat log duration in seconds
+  combat_log_duration: 15
+  # Percentage of money dropped on death
+  death_money_drop_percentage: 25
+  # Chance for decapitation on death (0-100)
+  decapitation_chance: 5
+  # Healing amount for medicine items
+  medicine_healing_amount: 4
+  # Required medicine level for healing others
+  required_medicine_level: 50
+
+# Hunger System
+hunger:
+  # Interval between hunger reduction (in seconds)
+  hunger_interval: 72
+  # Amount of hunger reduced per interval
+  hunger_reduce_amount: 1
+  # Health boundary for hunger healing
+  hunger_heal_boundary: 5
+  # Healing amount when well fed
+  hunger_healing_amount: 2
+  # Hunger consumed when healing
+  hunger_healing_cost: 5
+  # Start healing when health is below this percentage
+  start_healing_threshold: 75
+
+# Faction System
+factions:
+  # Gold required to start a lord poll
+  lord_poll_required_gold: 1000
+  # Timeout for lord polls in seconds
+  lord_poll_timeout: 300
+  # Timeout for war declarations in minutes
+  war_declare_timeout: 30
+  # Timeout for peace declarations in minutes
+  peace_declare_timeout: 30
+  # Maximum banner description length
+  max_banner_length: 100
+  # Maximum number of factions
+  max_factions: 20
+  # Maximum faction name length
+  max_faction_name_length: 32
+
+# Flag Capturing System
+flags:
+  # Time required to capture a flag (in seconds)
+  capture_duration: 10
+  # Radius around flag for capture detection
+  capture_radius: 3
+  # Item required to capture flags
+  capture_item: "BANNER"
+  # Cooldown between captures for same player (in seconds)
+  capture_cooldown: 60
+
+# Armor Weight System
+armor:
+  # Enable armor weight affecting movement speed
+  weight_affects_movement: true
+  # Base movement speed multiplier
+  base_speed_multiplier: 1.0
+  # Speed reduction per armor weight point
+  speed_reduction_per_weight: 0.05
+  # Maximum speed reduction percentage
+  max_speed_reduction: 0.5
+
+# Crafting System
+crafting:
+  # Enable custom crafting recipes
+  custom_recipes_enabled: true
+  # Crafting success rate percentage
+  base_success_rate: 80
+  # Experience gained per successful craft
+  experience_per_craft: 10
+
+# Admin Settings
+admin:
+  # Enable admin tools
+  admin_tools_enabled: true
+  # Log admin actions
+  log_admin_actions: true
+  # Admin action log file
+  admin_log_file: "admin_actions.log"
+
+# World Settings
+world:
+  # Enable day/night cycle effects
+  day_night_cycle: true
+  # Spawn protection radius
+  spawn_protection_radius: 50
+  # Enable territorial control
+  territorial_control: true
+
+# Performance Settings
+performance:
+  # Auto-save interval in minutes
+  auto_save_interval: 5
+  # Database connection pool size
+  db_pool_size: 10
+  # Enable async database operations
+  async_database: true
+  # Cache size for player data
+  player_cache_size: 1000
+
+# Messages (can be customized)
+messages:
+  prefix: "&6[PE] &r"
+  no_permission: "&cYou don't have permission to do that!"
+  player_not_found: "&cPlayer not found!"
+  not_in_faction: "&cYou are not in a faction!"
+  already_in_faction: "&cYou are already in a faction!"
+  faction_not_found: "&cFaction not found!"
+  faction_created: "&aFaction created successfully!"
+  faction_joined: "&aYou have joined the faction!"
+  faction_left: "&aYou have left the faction!"
+  war_declared: "&cWar has been declared!"
+  peace_made: "&aPeace has been made!"
+  flag_captured: "&aFlag captured!"
+  insufficient_funds: "&cInsufficient funds!"
+  combat_log_active: "&cYou are in combat! You cannot do that now."
