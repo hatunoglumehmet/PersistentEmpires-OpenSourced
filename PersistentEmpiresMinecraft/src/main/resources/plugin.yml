@@ -1,0 +1,83 @@
+name: PersistentEmpiresMinecraft
+version: '${project.version}'
+description: Minecraft adaptation of Persistent Empires mod with factions, flag capturing, and RPG elements
+author: PersistentEmpires Team
+main: com.persistentempires.minecraft.PersistentEmpiresPlugin
+api-version: '1.21'
+depend: []
+softdepend: []
+loadbefore: []
+
+commands:
+  pe:
+    description: Main Persistent Empires command
+    usage: /pe <subcommand>
+    permission: persistentempires.use
+    permission-message: You don't have permission to use this command
+  faction:
+    description: Faction management commands
+    usage: /faction <subcommand>
+    permission: persistentempires.faction.use
+    permission-message: You don't have permission to use faction commands
+  capture:
+    description: Flag capturing commands
+    usage: /capture <subcommand>
+    permission: persistentempires.capture.use
+    permission-message: You don't have permission to use capture commands
+  peadmin:
+    description: Admin commands for Persistent Empires
+    usage: /peadmin <subcommand>
+    permission: persistentempires.admin
+    permission-message: You don't have permission to use admin commands
+
+permissions:
+  persistentempires.*:
+    description: Gives access to all Persistent Empires features
+    default: false
+    children:
+      persistentempires.use: true
+      persistentempires.faction.*: true
+      persistentempires.capture.*: true
+      persistentempires.admin: true
+  persistentempires.use:
+    description: Basic Persistent Empires usage
+    default: true
+  persistentempires.faction.*:
+    description: All faction permissions
+    default: true
+    children:
+      persistentempires.faction.use: true
+      persistentempires.faction.create: true
+      persistentempires.faction.join: true
+      persistentempires.faction.leave: true
+      persistentempires.faction.manage: true
+  persistentempires.faction.use:
+    description: Use faction commands
+    default: true
+  persistentempires.faction.create:
+    description: Create new factions
+    default: true
+  persistentempires.faction.join:
+    description: Join existing factions
+    default: true
+  persistentempires.faction.leave:
+    description: Leave current faction
+    default: true
+  persistentempires.faction.manage:
+    description: Manage faction (for lords and marshalls)
+    default: false
+  persistentempires.capture.*:
+    description: All capture permissions
+    default: true
+    children:
+      persistentempires.capture.use: true
+      persistentempires.capture.flags: true
+  persistentempires.capture.use:
+    description: Use capture commands
+    default: true
+  persistentempires.capture.flags:
+    description: Capture flags and territories
+    default: true
+  persistentempires.admin:
+    description: Admin access to all features
+    default: op
